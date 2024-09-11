@@ -1,5 +1,5 @@
 > [!NOTE]
-> How to implement a healthy ALM process for Power Platform workshop at the Power Platform Community Conference 2024 in Las Vegas.
+> This repository is for the "How to implement a healthy ALM process for Power Platform" workshop at the Power Platform Community Conference 2024 in Las Vegas.
 
 ## Workshop description
 

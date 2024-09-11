@@ -1,0 +1,1082 @@
+- ScreenContainer1:
+    Control: GroupContainer
+    Variant: verticalAutoLayoutContainer
+    Properties:
+      DropShadow: =DropShadow.None
+      Fill: =RGBA(250, 250, 250, 1)
+      Height: =Parent.Height
+      LayoutAlignItems: =LayoutAlignItems.Stretch
+      LayoutDirection: =LayoutDirection.Vertical
+      LayoutGap: =15
+      LayoutMode: =LayoutMode.Auto
+      PaddingBottom: =16
+      PaddingLeft: =16
+      PaddingRight: =16
+      PaddingTop: =16
+      RadiusBottomLeft: =0
+      RadiusBottomRight: =0
+      RadiusTopLeft: =0
+      RadiusTopRight: =0
+      Width: =Parent.Width
+    Children:
+    - TableNameContainer1:
+        Control: GroupContainer
+        Variant: horizontalAutoLayoutContainer
+        Properties:
+          Fill: =RGBA(12, 59, 94, 1)
+          FillPortions: =0
+          Height: =68
+          LayoutAlignItems: =LayoutAlignItems.Center
+          LayoutMode: =LayoutMode.Auto
+        Children:
+        - Image4:
+            Control: Image
+            Properties:
+              Image: ='Contoso Real Estate Logo'
+              Fill: =RGBA(12, 59, 94, 1)
+        - TableNameLabel1:
+            Control: Label
+            Properties:
+              Text: ="Contoso Real Estate Listing"
+              AlignInContainer: =AlignInContainer.Stretch
+              Fill: =RGBA(12, 59, 94, 1)
+              FillPortions: =1
+              FontWeight: =FontWeight.Semibold
+              Height: =68
+              Size: =16
+        - Offline sync Icon1:
+            Control: Classic/Icon
+            Variant: Globe
+            Properties:
+              OnSelect: =ShowHostInfo(HostInfo.OfflineSync)
+              AccessibleLabel: ="Offline sync status icon"
+              Tooltip: =If(Connection.Connected,"Connected","Offline")
+              AlignInContainer: =AlignInContainer.Stretch
+              Color: =RGBA(255, 255, 255, 1)
+              Fill: =RGBA(12, 59, 94, 1)
+              Icon: |-
+                =Switch(Connection.Sync,
+                   ConnectionSync.Connected, Icon.Globe, 
+                   ConnectionSync.ConnectedWithWarning, Icon.GlobeWarning,
+                   ConnectionSync.ConnectedPendingUpsync, Icon.GlobeChangesPending,
+                   ConnectionSync.ConnectedError, Icon.GlobeError,
+                   ConnectionSync.ConnectedRefresh, Icon.GlobeRefresh,
+                   ConnectionSync.NotConnected, Icon.GlobeNotConnected, 
+                   ConnectionSync.NotConnectedWithWarning, Icon.GlobeWarning,
+                   ConnectionSync.NotConnectedPendingUpsync, Icon.GlobeChangesPending,
+                   ConnectionSync.NotConnectedSyncError, Icon.GlobeError)
+              LayoutMinHeight: =32
+              PaddingLeft: =5
+              PaddingRight: =15
+              TabIndex: =0
+              Visible: =Host.OfflineEnabled
+              Width: =52
+    - BodyContainer1:
+        Control: GroupContainer
+        Variant: horizontalAutoLayoutContainer
+        Properties:
+          DropShadow: =DropShadow.None
+          LayoutGap: =16
+          LayoutMode: =LayoutMode.Auto
+          PaddingBottom: =2
+          PaddingLeft: =2
+          PaddingRight: =2
+          PaddingTop: =2
+          RadiusBottomLeft: =0
+          RadiusBottomRight: =0
+          RadiusTopLeft: =0
+          RadiusTopRight: =0
+        Children:
+        - SidebarContainer1:
+            Control: GroupContainer
+            Variant: verticalAutoLayoutContainer
+            Properties:
+              Fill: =RGBA(255, 255, 255, 1)
+              FillPortions: =If(And(scrListings.Size = ScreenSize.Small, Or(newMode, editMode, itemSelected)), 0, 3)
+              LayoutDirection: =LayoutDirection.Vertical
+              LayoutGap: =10
+              LayoutMode: =LayoutMode.Auto
+              PaddingLeft: =16
+              PaddingRight: =16
+              PaddingTop: =10
+              Visible: =If(And(scrListings.Size = ScreenSize.Small, Or(newMode, editMode, itemSelected)), false, true)
+            Children:
+            - SearchContainer1:
+                Control: GroupContainer
+                Variant: horizontalAutoLayoutContainer
+                Properties:
+                  FillPortions: =0
+                  Height: =44
+                  LayoutMinWidth: =0
+                  LayoutMode: =LayoutMode.Auto
+                Children:
+                - SearchInput1:
+                    Control: Classic/TextInput
+                    Properties:
+                      Default: =""
+                      HintText: ="Search"
+                      FillPortions: =1
+                      Height: =44
+                      LayoutMinWidth: =0
+                - SearchIcon1:
+                    Control: Classic/Icon
+                    Properties:
+                      Height: =44
+                      Icon: =Icon.Search
+                      PaddingBottom: =10
+                      PaddingLeft: =10
+                      PaddingRight: =10
+                      PaddingTop: =10
+                      Width: =44
+            - NewRecordButtonBarContainer1:
+                Control: GroupContainer
+                Variant: horizontalAutoLayoutContainer
+                Properties:
+                  DropShadow: =DropShadow.None
+                  FillPortions: =0
+                  Height: =44
+                  LayoutMode: =LayoutMode.Auto
+                Children:
+                - NewRecordAddIcon1:
+                    Control: Classic/Icon
+                    Properties:
+                      OnSelect: |-
+                        =NewForm(frmListing); UpdateContext({ newMode: true });
+                      Height: =44
+                      Icon: =Icon.Add
+                      PaddingBottom: =10
+                      PaddingLeft: =10
+                      PaddingRight: =10
+                      PaddingTop: =10
+                      Width: =44
+                - NewRecordLabel1:
+                    Control: Label
+                    Properties:
+                      Text: ="New"
+                      FillPortions: =1
+                      Height: =44
+            - RecordsListSeparator1:
+                Control: Rectangle
+                Properties:
+                  AlignInContainer: =AlignInContainer.Stretch
+                  Fill: =RGBA(225, 223, 221, 1)
+                  Height: =1
+                  LayoutMinWidth: =200
+            - RecordsGallery1:
+                Control: Gallery
+                Variant: BrowseLayout_Vertical_ThreeTextVariant_ver5.0
+                Properties:
+                  OnSelect: |-
+                    =UpdateContext({ itemSelected: true, CurrentItem: ThisItem })
+                  Default: =CurrentItem
+                  Items: =Search([@Listings], SearchInput1.Text, Name, Address,Description,'Display Name')
+                  DelayItemLoading: =true
+                  Fill: =RGBA(250, 250, 250, 1)
+                  Layout: =Layout.Vertical
+                  LayoutMinWidth: =0
+                  LoadingSpinner: =LoadingSpinner.Data
+                  TemplateFill: =If(Self.IsSelected, RGBA(230, 230, 230, 1), RGBA(0, 0, 0, 0))
+                  TemplatePadding: =0
+                  TemplateSize: =104
+                Children:
+                - Image3:
+                    Control: Image
+                    Properties:
+                      OnSelect: =Select(Parent)
+                      Image: =ThisItem.'Primary Image'.Image
+                      Height: =84
+                      ImagePosition: =ImagePosition.Fill
+                      PaddingTop: =-3
+                      RadiusBottomLeft: =4
+                      RadiusBottomRight: =4
+                      RadiusTopLeft: =4
+                      RadiusTopRight: =4
+                      Width: =83
+                      X: =7
+                      Y: =10
+                - Rectangle1:
+                    Control: Rectangle
+                    Properties:
+                      OnSelect: =Select(Parent)
+                      Height: =Parent.TemplateHeight - Separator1.Height
+                      Visible: =ThisItem.IsSelected
+                      Width: =4
+                - Separator1:
+                    Control: Rectangle
+                    Properties:
+                      OnSelect: =Select(Parent)
+                      Fill: =RGBA(255, 255, 255, 1)
+                      Height: =8
+                      Width: =Parent.TemplateWidth
+                      Y: =Parent.TemplateHeight - Self.Height
+                - NextArrow1:
+                    Control: Classic/Icon
+                    Variant: ChevronRight
+                    Properties:
+                      OnSelect: =Select(Parent)
+                      AccessibleLabel: =Self.Tooltip
+                      Tooltip: ="View item details"
+                      Color: =RGBA(166, 166, 166, 1)
+                      Height: =50
+                      Icon: =Icon.ChevronRight
+                      PaddingBottom: =16
+                      PaddingLeft: =16
+                      PaddingRight: =16
+                      PaddingTop: =16
+                      Width: =50
+                      X: =Parent.TemplateWidth - Self.Width - 12
+                      Y: =(Parent.TemplateHeight / 2) - (Self.Height / 2)
+                - Body1:
+                    Control: Label
+                    Properties:
+                      OnSelect: =Select(Parent)
+                      Text: =ThisItem.Address
+                      FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                      Height: =Self.Size * 1.8
+                      PaddingBottom: =0
+                      PaddingLeft: =12
+                      PaddingRight: =0
+                      PaddingTop: =0
+                      VerticalAlign: =VerticalAlign.Top
+                      Width: =Title1.Width
+                      X: =Title1.X
+                      Y: =Subtitle1.Y + Subtitle1.Height
+                - Subtitle1:
+                    Control: Label
+                    Properties:
+                      OnSelect: =Select(Parent)
+                      Text: =ThisItem.Description
+                      FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                      Height: =Self.Size * 1.8
+                      PaddingBottom: =0
+                      PaddingLeft: =12
+                      PaddingRight: =0
+                      PaddingTop: =0
+                      VerticalAlign: =VerticalAlign.Top
+                      Width: =Title1.Width
+                      X: =Title1.X
+                      Y: =Title1.Y + Title1.Height
+                - Title1:
+                    Control: Label
+                    Properties:
+                      OnSelect: =Select(Parent)
+                      Text: =ThisItem.Name
+                      FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                      Height: =Self.Size * 1.8
+                      PaddingBottom: =0
+                      PaddingLeft: =12
+                      PaddingRight: =0
+                      PaddingTop: =0
+                      VerticalAlign: =VerticalAlign.Top
+                      Width: =202
+                      X: =90
+                      Y: =(Parent.TemplateHeight - (Self.Size*1.8 + Subtitle1.Size*1.8 + 2 + Body1.Size*1.8)) / 2
+        - RightContainer1:
+            Control: GroupContainer
+            Variant: verticalAutoLayoutContainer
+            Properties:
+              DropShadow: =DropShadow.None
+              FillPortions: =7
+              LayoutAlignItems: =LayoutAlignItems.Stretch
+              LayoutDirection: =LayoutDirection.Vertical
+              LayoutGap: =16
+              LayoutMode: =LayoutMode.Auto
+              PaddingBottom: =2
+              PaddingLeft: =2
+              PaddingRight: =2
+              PaddingTop: =2
+              Visible: =If(Or(deleteMode, And(scrListings.Size = ScreenSize.Small, !newMode, !editMode, !itemSelected)), false, true)
+              Width: =0
+            Children:
+            - SelectedRecordHeaderContainer1:
+                Control: GroupContainer
+                Variant: horizontalAutoLayoutContainer
+                Properties:
+                  Fill: =RGBA(255, 255, 255, 1)
+                  FillPortions: =0
+                  Height: =50
+                  LayoutAlignItems: =LayoutAlignItems.Center
+                  LayoutMode: =LayoutMode.Auto
+                Children:
+                - EditIconButton1:
+                    Control: Classic/Icon
+                    Properties:
+                      OnSelect: |-
+                        =UpdateContext({ editMode: true, selectedRecord: RecordsGallery1.Selected })
+                      Height: =50
+                      Icon: =Icon.Edit
+                      PaddingBottom: =12
+                      PaddingLeft: =12
+                      PaddingRight: =12
+                      PaddingTop: =12
+                      TabIndex: =0
+                      Visible: =And(!editMode, !newMode, !deleteMode)
+                      Width: =50
+                - BackIconButton1:
+                    Control: Classic/Icon
+                    Variant: Add
+                    Properties:
+                      OnSelect: |-
+                        =UpdateContext({ itemSelected: false })
+                      Height: =50
+                      Icon: =Icon.ChevronLeft
+                      PaddingBottom: =12
+                      PaddingLeft: =12
+                      PaddingRight: =12
+                      PaddingTop: =12
+                      TabIndex: =0
+                      Visible: =If(scrListings.Size = ScreenSize.Small, And(!editMode, !newMode, !deleteMode), false)
+                      Width: =50
+                - SubmitFormButton1:
+                    Control: Classic/Icon
+                    Properties:
+                      OnSelect: =SubmitForm(frmListing)
+                      Height: =50
+                      Icon: =Icon.Check
+                      PaddingBottom: =12
+                      PaddingLeft: =12
+                      PaddingRight: =12
+                      PaddingTop: =12
+                      TabIndex: =0
+                      Visible: =Or(editMode, newMode)
+                      Width: =50
+                - ResetFormButton1:
+                    Control: Classic/Icon
+                    Properties:
+                      OnSelect: |-
+                        =ResetForm(frmListing); UpdateContext({ editMode: false, newMode: false });
+                      Height: =50
+                      Icon: =Icon.Cancel
+                      PaddingBottom: =12
+                      PaddingLeft: =12
+                      PaddingRight: =12
+                      PaddingTop: =12
+                      TabIndex: =0
+                      Visible: =Or(editMode, newMode)
+                      Width: =50
+                - DeleteIconButton1:
+                    Control: Classic/Icon
+                    Properties:
+                      OnSelect: |-
+                        =UpdateContext({ deleteMode: true, deleteCancelled: false, selectedRecord: RecordsGallery1.Selected })
+                      Height: =50
+                      Icon: =Icon.Trash
+                      PaddingBottom: =12
+                      PaddingLeft: =12
+                      PaddingRight: =12
+                      PaddingTop: =12
+                      TabIndex: =0
+                      Visible: =And(!editMode, !newMode, !deleteMode)
+                      Width: =50
+                - SelectedRecordTitle1:
+                    Control: Label
+                    Properties:
+                      Text: =RecordsGallery1.Selected.Name
+                      AlignInContainer: =AlignInContainer.Stretch
+                      FillPortions: =1
+                      FontWeight: =FontWeight.Semibold
+                      PaddingLeft: =30
+            - MainContainer1:
+                Control: GroupContainer
+                Variant: verticalAutoLayoutContainer
+                Properties:
+                  Fill: =RGBA(255, 255, 255, 1)
+                  LayoutMode: =LayoutMode.Auto
+                Children:
+                - frmListing:
+                    Control: Form
+                    Layout: vertical
+                    Properties:
+                      OnFailure: =Notify("Cannot save. Please check if there are errors in the form.", NotificationType.Error)
+                      OnSuccess: |-
+                        =UpdateContext({ CurrentItem: Self.LastSubmit, editMode: false, newMode: false })
+                      DataSource: =Listings
+                      DefaultMode: =If(newMode, FormMode.New, editMode, FormMode.Edit, FormMode.View)
+                      Item: =RecordsGallery1.Selected
+                      FillPortions: =2
+                      LayoutMinWidth: =300
+                    Children:
+                    - Listing ID_DataCard1:
+                        Control: TypedDataCard
+                        Variant: textualViewCard
+                        Properties:
+                          DataField: ="contoso_listingid1"
+                          Default: =ThisItem.'Listing ID'
+                          DisplayName: =DataSourceInfo([@Listings],DataSourceInfo.DisplayName,contoso_listingid1)
+                          DisplayMode: =DisplayMode.View
+                          Height: =40
+                          Width: =400
+                        Children:
+                        - DataCardValue4:
+                            Control: Label
+                            Properties:
+                              Text: =Parent.Default
+                              AutoHeight: =true
+                              DisplayMode: =Parent.DisplayMode
+                              Height: =27
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              Width: =Parent.Width - 60
+                              X: =30
+                              Y: =DataCardKey4.Y + DataCardKey4.Height + 5
+                        - DataCardKey4:
+                            Control: Label
+                            Properties:
+                              Text: =Parent.DisplayName
+                              AutoHeight: =true
+                              Height: =34
+                              PaddingLeft: =0
+                              Width: =Parent.Width - 60
+                              Wrap: =false
+                              X: =30
+                              Y: =10
+                    - Name_DataCard1:
+                        Control: TypedDataCard
+                        Variant: textualEditCard
+                        Properties:
+                          DataField: ="contoso_name"
+                          Default: =ThisItem.Name
+                          DisplayName: =DataSourceInfo([@Listings],DataSourceInfo.DisplayName,contoso_name)
+                          MaxLength: =DataSourceInfo([@Listings], DataSourceInfo.MaxLength, contoso_name)
+                          Required: =true
+                          Update: =DataCardValue5.Text
+                          DisplayMode: =Parent.DisplayMode
+                          Height: =50
+                          Width: =400
+                          X: =1
+                        Children:
+                        - StarVisible4:
+                            Control: Label
+                            Properties:
+                              Text: ="*"
+                              Align: =Align.Center
+                              Height: =DataCardKey5.Height
+                              PaddingLeft: =0
+                              Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                              Width: =30
+                              Wrap: =false
+                              Y: =DataCardKey5.Y
+                        - ErrorMessage4:
+                            Control: Label
+                            Properties:
+                              Live: =Live.Assertive
+                              Text: =Parent.Error
+                              AutoHeight: =true
+                              Height: =10
+                              PaddingBottom: =0
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              Size: =13
+                              Visible: =Parent.DisplayMode=DisplayMode.Edit
+                              Width: =Parent.Width - 60
+                              X: =30
+                              Y: =DataCardValue5.Y + DataCardValue5.Height
+                        - DataCardValue5:
+                            Control: Classic/TextInput
+                            Properties:
+                              Default: =Parent.Default
+                              DelayOutput: =true
+                              MaxLength: =Parent.MaxLength
+                              Tooltip: =Parent.DisplayName
+                              BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                              DisplayMode: =Parent.DisplayMode
+                              PaddingLeft: =5
+                              RadiusBottomLeft: =0
+                              RadiusBottomRight: =0
+                              RadiusTopLeft: =0
+                              RadiusTopRight: =0
+                              Width: =Parent.Width - 60
+                              X: =30
+                              Y: =DataCardKey5.Y + DataCardKey5.Height + 5
+                        - DataCardKey5:
+                            Control: Label
+                            Properties:
+                              Text: =Parent.DisplayName
+                              AutoHeight: =true
+                              Height: =34
+                              PaddingLeft: =0
+                              Width: =Parent.Width - 60
+                              Wrap: =false
+                              X: =30
+                              Y: =10
+                    - Display Name_DataCard1:
+                        Control: TypedDataCard
+                        Variant: textualEditCard
+                        Properties:
+                          DataField: ="contoso_displayname"
+                          Default: =ThisItem.'Display Name'
+                          DisplayName: =DataSourceInfo([@Listings],DataSourceInfo.DisplayName,contoso_displayname)
+                          MaxLength: =DataSourceInfo([@Listings], DataSourceInfo.MaxLength, contoso_displayname)
+                          Update: =DataCardValue3.Text
+                          DisplayMode: =Parent.DisplayMode
+                          Height: =50
+                          Width: =400
+                          Y: =1
+                        Children:
+                        - StarVisible3:
+                            Control: Label
+                            Properties:
+                              Text: ="*"
+                              Align: =Align.Center
+                              Height: =DataCardKey3.Height
+                              PaddingLeft: =0
+                              Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                              Width: =30
+                              Wrap: =false
+                              Y: =DataCardKey3.Y
+                        - ErrorMessage3:
+                            Control: Label
+                            Properties:
+                              Live: =Live.Assertive
+                              Text: =Parent.Error
+                              AutoHeight: =true
+                              Height: =10
+                              PaddingBottom: =0
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              Size: =13
+                              Visible: =Parent.DisplayMode=DisplayMode.Edit
+                              Width: =Parent.Width - 60
+                              X: =30
+                              Y: =DataCardValue3.Y + DataCardValue3.Height
+                        - DataCardValue3:
+                            Control: Classic/TextInput
+                            Properties:
+                              Default: =Parent.Default
+                              DelayOutput: =true
+                              MaxLength: =Parent.MaxLength
+                              Tooltip: =Parent.DisplayName
+                              BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                              DisplayMode: =Parent.DisplayMode
+                              PaddingLeft: =5
+                              RadiusBottomLeft: =0
+                              RadiusBottomRight: =0
+                              RadiusTopLeft: =0
+                              RadiusTopRight: =0
+                              Width: =Parent.Width - 60
+                              X: =30
+                              Y: =DataCardKey3.Y + DataCardKey3.Height + 5
+                        - DataCardKey3:
+                            Control: Label
+                            Properties:
+                              Text: =Parent.DisplayName
+                              AutoHeight: =true
+                              Height: =34
+                              PaddingLeft: =0
+                              Width: =Parent.Width - 60
+                              Wrap: =false
+                              X: =30
+                              Y: =10
+                    - Address_DataCard1:
+                        Control: TypedDataCard
+                        Variant: textualEditCard
+                        Properties:
+                          DataField: ="contoso_address"
+                          Default: =ThisItem.Address
+                          DisplayName: =DataSourceInfo([@Listings],DataSourceInfo.DisplayName,contoso_address)
+                          MaxLength: =DataSourceInfo([@Listings], DataSourceInfo.MaxLength, contoso_address)
+                          Update: =DataCardValue1.Text
+                          DisplayMode: =Parent.DisplayMode
+                          Height: =50
+                          Width: =400
+                          X: =1
+                          Y: =1
+                        Children:
+                        - StarVisible1:
+                            Control: Label
+                            Properties:
+                              Text: ="*"
+                              Align: =Align.Center
+                              Height: =DataCardKey1.Height
+                              PaddingLeft: =0
+                              Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                              Width: =30
+                              Wrap: =false
+                              Y: =DataCardKey1.Y
+                        - ErrorMessage1:
+                            Control: Label
+                            Properties:
+                              Live: =Live.Assertive
+                              Text: =Parent.Error
+                              AutoHeight: =true
+                              Height: =10
+                              PaddingBottom: =0
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              Size: =13
+                              Visible: =Parent.DisplayMode=DisplayMode.Edit
+                              Width: =Parent.Width - 60
+                              X: =30
+                              Y: =DataCardValue1.Y + DataCardValue1.Height
+                        - DataCardValue1:
+                            Control: Classic/TextInput
+                            Properties:
+                              Default: =Parent.Default
+                              DelayOutput: =true
+                              MaxLength: =Parent.MaxLength
+                              Tooltip: =Parent.DisplayName
+                              BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                              DisplayMode: =Parent.DisplayMode
+                              PaddingLeft: =5
+                              RadiusBottomLeft: =0
+                              RadiusBottomRight: =0
+                              RadiusTopLeft: =0
+                              RadiusTopRight: =0
+                              Width: =Parent.Width - 60
+                              X: =30
+                              Y: =DataCardKey1.Y + DataCardKey1.Height + 5
+                        - DataCardKey1:
+                            Control: Label
+                            Properties:
+                              Text: =Parent.DisplayName
+                              AutoHeight: =true
+                              Height: =34
+                              PaddingLeft: =0
+                              Width: =Parent.Width - 60
+                              Wrap: =false
+                              X: =30
+                              Y: =10
+                    - Description_DataCard1:
+                        Control: TypedDataCard
+                        Variant: textualMultiLineEditCard
+                        Properties:
+                          DataField: ="contoso_description"
+                          Default: =ThisItem.Description
+                          DisplayName: =DataSourceInfo([@Listings],DataSourceInfo.DisplayName,contoso_description)
+                          Update: =DataCardValue2.Text
+                          DisplayMode: =Parent.DisplayMode
+                          Height: =50
+                          Width: =400
+                          Y: =2
+                        Children:
+                        - StarVisible2:
+                            Control: Label
+                            Properties:
+                              Text: ="*"
+                              Align: =Align.Center
+                              Height: =DataCardKey2.Height
+                              PaddingLeft: =0
+                              Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                              Width: =30
+                              Wrap: =false
+                              Y: =DataCardKey2.Y
+                        - ErrorMessage2:
+                            Control: Label
+                            Properties:
+                              Live: =Live.Assertive
+                              Text: =Parent.Error
+                              AutoHeight: =true
+                              Height: =10
+                              PaddingBottom: =0
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              Size: =13
+                              Visible: =Parent.DisplayMode=DisplayMode.Edit
+                              Width: =Parent.Width - 60
+                              X: =30
+                              Y: =DataCardValue2.Y + DataCardValue2.Height
+                        - DataCardValue2:
+                            Control: Classic/TextInput
+                            Properties:
+                              Default: =Parent.Default
+                              DelayOutput: =true
+                              Tooltip: =Parent.DisplayName
+                              BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                              DisplayMode: =Parent.DisplayMode
+                              Height: =80
+                              Mode: =TextMode.MultiLine
+                              PaddingLeft: =5
+                              RadiusBottomLeft: =0
+                              RadiusBottomRight: =0
+                              RadiusTopLeft: =0
+                              RadiusTopRight: =0
+                              Width: =Parent.Width - 60
+                              X: =30
+                              Y: =DataCardKey2.Y + DataCardKey2.Height + 5
+                        - DataCardKey2:
+                            Control: Label
+                            Properties:
+                              Text: =Parent.DisplayName
+                              AutoHeight: =true
+                              Height: =34
+                              PaddingLeft: =0
+                              Width: =Parent.Width - 60
+                              Wrap: =false
+                              X: =30
+                              Y: =10
+                    - Price per Month_DataCard1:
+                        Control: TypedDataCard
+                        Variant: currencyEditCard
+                        Properties:
+                          DataField: ="contoso_pricepermonth"
+                          Default: =ThisItem.'Price per Month'
+                          DisplayName: =DataSourceInfo([@Listings],DataSourceInfo.DisplayName,contoso_pricepermonth)
+                          Update: =Value(DataCardValue6.Text)
+                          DisplayMode: =Parent.DisplayMode
+                          Height: =50
+                          Width: =400
+                          X: =1
+                          Y: =2
+                        Children:
+                        - StarVisible5:
+                            Control: Label
+                            Properties:
+                              Text: ="*"
+                              Align: =Align.Center
+                              Height: =DataCardKey6.Height
+                              PaddingLeft: =0
+                              Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                              Width: =30
+                              Wrap: =false
+                              Y: =DataCardKey6.Y
+                        - ErrorMessage5:
+                            Control: Label
+                            Properties:
+                              Live: =Live.Assertive
+                              Text: =Parent.Error
+                              AutoHeight: =true
+                              Height: =10
+                              PaddingBottom: =0
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              Size: =13
+                              Visible: =Parent.DisplayMode=DisplayMode.Edit
+                              Width: =Parent.Width - 60
+                              X: =30
+                              Y: =DataCardValue6.Y + DataCardValue6.Height
+                        - DataCardValue6:
+                            Control: Classic/TextInput
+                            Properties:
+                              Default: =Parent.Default
+                              DelayOutput: =true
+                              Tooltip: =Parent.DisplayName
+                              BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                              DisplayMode: =Parent.DisplayMode
+                              Format: =TextFormat.Number
+                              PaddingLeft: =5
+                              RadiusBottomLeft: =0
+                              RadiusBottomRight: =0
+                              RadiusTopLeft: =0
+                              RadiusTopRight: =0
+                              Width: =Parent.Width - 60
+                              X: =30
+                              Y: =DataCardKey6.Y + DataCardKey6.Height + 5
+                        - DataCardKey6:
+                            Control: Label
+                            Properties:
+                              Text: =Parent.DisplayName
+                              AutoHeight: =true
+                              Height: =34
+                              PaddingLeft: =0
+                              Width: =Parent.Width - 60
+                              Wrap: =false
+                              X: =30
+                              Y: =10
+                    - Features_DataCard1:
+                        Control: TypedDataCard
+                        Variant: comboBoxOptionSetMultiEditCard
+                        Properties:
+                          DataField: ="contoso_features"
+                          Default: =ThisItem.Features
+                          DisplayName: =DataSourceInfo([@Listings],DataSourceInfo.DisplayName,contoso_features)
+                          Update: =DataCardValue8.SelectedItems.Value
+                          DisplayMode: =Parent.DisplayMode
+                          Height: =50
+                          Width: =400
+                          Y: =3
+                        Children:
+                        - StarVisible6:
+                            Control: Label
+                            Properties:
+                              Text: ="*"
+                              Align: =Align.Center
+                              Height: =DataCardKey8.Height
+                              PaddingLeft: =0
+                              Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                              Width: =30
+                              Wrap: =false
+                              Y: =DataCardKey8.Y
+                        - ErrorMessage6:
+                            Control: Label
+                            Properties:
+                              Live: =Live.Assertive
+                              Text: =Parent.Error
+                              AutoHeight: =true
+                              Height: =10
+                              PaddingBottom: =0
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              Size: =13
+                              Visible: =Parent.DisplayMode=DisplayMode.Edit
+                              Width: =Parent.Width - 60
+                              X: =30
+                              Y: =DataCardValue8.Y + DataCardValue8.Height
+                        - DataCardValue8:
+                            Control: Classic/ComboBox
+                            Properties:
+                              DefaultSelectedItems: =Parent.Default
+                              DisplayFields: =["Value"]
+                              IsSearchable: =false
+                              Items: =Choices('Features (Listings)')
+                              SearchFields: =["Value"]
+                              Tooltip: =Parent.DisplayName
+                              BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                              DisplayMode: =Parent.DisplayMode
+                              PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                              Width: =Parent.Width - 60
+                              X: =30
+                              Y: =DataCardKey8.Y + DataCardKey8.Height + 5
+                        - DataCardKey8:
+                            Control: Label
+                            Properties:
+                              Text: =Parent.DisplayName
+                              AutoHeight: =true
+                              Height: =34
+                              PaddingLeft: =0
+                              Width: =Parent.Width - 60
+                              Wrap: =false
+                              X: =30
+                              Y: =10
+                    - Primary Image_DataCard1:
+                        Control: TypedDataCard
+                        Variant: comboBoxEditCard
+                        Properties:
+                          DataField: ="contoso_PrimaryImage"
+                          Default: =ThisItem.'Primary Image'
+                          DisplayName: =DataSourceInfo([@Listings],DataSourceInfo.DisplayName,contoso_PrimaryImage)
+                          Update: =DataCardValue7.Selected
+                          DisplayMode: =Parent.DisplayMode
+                          Height: =50
+                          Width: =400
+                          X: =1
+                          Y: =3
+                        Children:
+                        - StarVisible7:
+                            Control: Label
+                            Properties:
+                              Text: ="*"
+                              Align: =Align.Center
+                              Height: =DataCardKey7.Height
+                              PaddingLeft: =0
+                              Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                              Width: =30
+                              Wrap: =false
+                              Y: =DataCardKey7.Y
+                        - ErrorMessage7:
+                            Control: Label
+                            Properties:
+                              Live: =Live.Assertive
+                              Text: =Parent.Error
+                              AutoHeight: =true
+                              Height: =10
+                              PaddingBottom: =0
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              Size: =13
+                              Visible: =Parent.DisplayMode=DisplayMode.Edit
+                              Width: =Parent.Width - 60
+                              X: =30
+                              Y: =DataCardValue7.Y + DataCardValue7.Height
+                        - DataCardValue7:
+                            Control: Classic/ComboBox
+                            Properties:
+                              DefaultSelectedItems: =Parent.Default
+                              DisplayFields: =["contoso_name"]
+                              Items: =Choices([@Listings].contoso_PrimaryImage)
+                              SearchFields: =["contoso_name"]
+                              SelectMultiple: =false
+                              Tooltip: =Parent.DisplayName
+                              BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                              DisplayMode: =Parent.DisplayMode
+                              PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                              Width: =Parent.Width - 60
+                              X: =30
+                              Y: =DataCardKey7.Y + DataCardKey7.Height + 5
+                        - DataCardKey7:
+                            Control: Label
+                            Properties:
+                              Text: =Parent.DisplayName
+                              AutoHeight: =true
+                              Height: =34
+                              PaddingLeft: =0
+                              Width: =Parent.Width - 60
+                              Wrap: =false
+                              X: =30
+                              Y: =10
+            - conImagesRoot_1:
+                Control: GroupContainer
+                Variant: verticalAutoLayoutContainer
+                Properties:
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutGap: =4
+                  LayoutMode: =LayoutMode.Auto
+                  Visible: =!newMode
+                Children:
+                - conImagesToolbar_1:
+                    Control: GroupContainer
+                    Variant: horizontalAutoLayoutContainer
+                    Properties:
+                      FillPortions: =0
+                      Height: =32
+                      LayoutMinHeight: =32
+                      LayoutMinWidth: =0
+                      LayoutMode: =LayoutMode.Auto
+                    Children:
+                    - icoAddNewImage_1:
+                        Control: Classic/Icon
+                        Variant: Add
+                        Properties:
+                          OnSelect: =//Navigate(scrAddImage)
+                          Height: =24
+                          Icon: =Icon.Add
+                          LayoutMinHeight: =0
+                    - icoDeleteImage_1:
+                        Control: Classic/Icon
+                        Variant: Trash
+                        Properties:
+                          OnSelect: =Remove('Listing Images',galImages_1.Selected)
+                          Height: =24
+                          Icon: =Icon.Trash
+                          LayoutMinHeight: =0
+                - galImages_1:
+                    Control: Gallery
+                    Variant: BrowseLayout_Vertical_TwoTextOneImageVariant_ver5.0
+                    Properties:
+                      Items: =Filter('Listing Images',Listing.Listing = RecordsGallery1.Selected.Listing)
+                      DelayItemLoading: =true
+                      Layout: =Layout.Vertical
+                      LayoutMinWidth: =0
+                      LoadingSpinner: =LoadingSpinner.Data
+                      TemplatePadding: =0
+                      TemplateSize: =104
+                    Children:
+                    - ButtonCanvas1_1:
+                        Control: Button
+                        Properties:
+                          OnSelect: |-
+                            =Patch(
+                                Listings,RecordsGallery1.Selected,
+                                {
+                                    'Primary Image':ThisItem
+                                }
+                            );
+                          Appearance: ='ButtonCanvas.Appearance'.Subtle
+                          Text: =If(Text(RecordsGallery1.Selected.'Primary Image'.contoso_ImageId) = Text(ThisItem.contoso_ImageId),"Default", "Set Default")
+                          DisplayMode: =If(RecordsGallery1.Selected.'Primary Image'.contoso_ImageId = ThisItem.contoso_ImageId,DisplayMode.View, DisplayMode.Edit)
+                          X: =Parent.Width-Self.Width-8
+                          Y: =8
+                    - Rectangle2_1:
+                        Control: Rectangle
+                        Properties:
+                          OnSelect: =Select(Parent)
+                          Height: =Parent.TemplateHeight - Separator2_1.Height
+                          Visible: =ThisItem.IsSelected
+                          Width: =4
+                    - Separator2_1:
+                        Control: Rectangle
+                        Properties:
+                          OnSelect: =Select(Parent)
+                          Fill: =RGBA(255, 255, 255, 1)
+                          Height: =8
+                          Width: =Parent.TemplateWidth
+                          Y: =Parent.TemplateHeight - Self.Height
+                    - Subtitle2_1:
+                        Control: Label
+                        Properties:
+                          OnSelect: =Select(Parent)
+                          Text: =ThisItem.'Created On'
+                          FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                          Height: =Self.Size * 1.8
+                          PaddingBottom: =0
+                          PaddingLeft: =12
+                          PaddingRight: =0
+                          PaddingTop: =0
+                          VerticalAlign: =VerticalAlign.Top
+                          Width: =Title2_1.Width
+                          X: =Title2_1.X
+                          Y: =Title2_1.Y + Title2_1.Height
+                    - Title2_1:
+                        Control: Label
+                        Properties:
+                          OnSelect: =Select(Parent)
+                          Text: =ThisItem.Name
+                          FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                          Height: =Self.Size * 1.8
+                          PaddingBottom: =0
+                          PaddingLeft: =12
+                          PaddingRight: =0
+                          PaddingTop: =0
+                          VerticalAlign: =VerticalAlign.Top
+                          Width: =Parent.TemplateWidth - 173
+                          X: =103
+                          Y: =(Parent.TemplateHeight - (Self.Size * 1.8 + Subtitle2_1.Size * 1.8)) / 2
+                    - Image2_1:
+                        Control: Image
+                        Properties:
+                          OnSelect: =Select(Parent)
+                          Image: =ThisItem.Image
+                          Height: =72
+                          RadiusBottomLeft: =8
+                          RadiusBottomRight: =8
+                          RadiusTopLeft: =8
+                          RadiusTopRight: =8
+                          Width: =72
+                          X: =16
+                          Y: =(Parent.TemplateHeight / 2) - (Self.Height / 2)
+                    - TextCanvas3_1:
+                        Control: Text
+                        Properties:
+                          Text: =ThisItem.contoso_ImageId
+                          Height: =34
+                          Width: =30
+                          X: =40
+                          Y: =40
+        - DeleteConfirmDialogContainer1:
+            Control: GroupContainer
+            Variant: verticalAutoLayoutContainer
+            Properties:
+              FillPortions: =7
+              LayoutDirection: =LayoutDirection.Vertical
+              LayoutMode: =LayoutMode.Auto
+              Visible: =If(deleteMode, true, false)
+              Width: =0
+            Children:
+            - ConfirmDeletionLabel1:
+                Control: Label
+                Properties:
+                  Text: ="Are you sure you want to delete this record?"
+                  Align: =Align.Center
+                  AlignInContainer: =AlignInContainer.Stretch
+                  FillPortions: =1
+            - ConfirmDeleteButtonBarContainer1:
+                Control: GroupContainer
+                Variant: horizontalAutoLayoutContainer
+                Properties:
+                  DropShadow: =DropShadow.None
+                  LayoutGap: =15
+                  LayoutJustifyContent: =LayoutJustifyContent.Center
+                  LayoutMode: =LayoutMode.Auto
+                  LayoutWrap: =true
+                Children:
+                - CancelDeleteButton1:
+                    Control: Classic/Button
+                    Properties:
+                      OnSelect: |-
+                        =UpdateContext({ deleteMode: false, deleteCancelled: true })
+                      Text: ="Cancel"
+                - ConfirmDeleteButton1:
+                    Control: Classic/Button
+                    Properties:
+                      OnSelect: |-
+                        =Remove([@Listings], selectedRecord);
+
+                        If(IsEmpty(Errors([@Listings], selectedRecord)), UpdateContext( { CurrentItem: First([@Listings]), itemSelected: false, editMode: false, newMode: false, deleteMode: false }));
+                      Text: ="Delete"
