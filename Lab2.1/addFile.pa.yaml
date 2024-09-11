@@ -1,0 +1,94 @@
+- conDialogRoot:
+    Control: GroupContainer
+    Variant: verticalAutoLayoutContainer
+    Properties:
+      DropShadow: =DropShadow.Semibold
+      Height: =App.Height * 0.8
+      LayoutDirection: =LayoutDirection.Vertical
+      LayoutGap: =16
+      LayoutMode: =LayoutMode.Auto
+      PaddingBottom: =16
+      PaddingLeft: =16
+      PaddingRight: =16
+      PaddingTop: =16
+      Width: =App.Width * 0.8
+      X: =Parent.Width/2-(Self.Width/2)
+      Y: =Parent.Height/2-(Self.Height/2)
+    Children:
+    - conUploadImage:
+        Control: GroupContainer
+        Variant: manualLayoutContainer
+        Children:
+        - UploadedImage1:
+            Control: Image
+            Properties:
+              Image: =If(IsBlank(AddMediaButton1.Media), SampleImage, AddMediaButton1.Media)
+              BorderStyle: =BorderStyle.Solid
+              Height: =Parent.Height
+              ImagePosition: =ImagePosition.Fill
+              Width: =Parent.Width
+              X: =AddMediaButton1.X
+              Y: =AddMediaButton1.Y
+        - AddMediaButton1:
+            Control: AddMedia
+            Properties:
+              ChangePictureText: ="Change Image"
+              Text: ="Select Image"
+              Height: =Parent.Height
+              Size: =12
+              Width: =Parent.Width
+    - conDialogButtons:
+        Control: GroupContainer
+        Variant: horizontalAutoLayoutContainer
+        Properties:
+          FillPortions: =0
+          Height: =46
+          LayoutGap: =16
+          LayoutJustifyContent: =LayoutJustifyContent.End
+          LayoutMode: =LayoutMode.Auto
+          PaddingBottom: =8
+          PaddingLeft: =8
+          PaddingRight: =8
+          PaddingTop: =8
+        Children:
+        - cmdCancel:
+            Control: Button
+            Properties:
+              OnSelect: |-
+                =
+                Navigate(scrListings);
+              Appearance: ='ButtonCanvas.Appearance'.Outline
+              Text: ="Cancel"
+              X: =225
+              Y: =80
+        - cmdAddImage:
+            Control: Button
+            Properties:
+              OnSelect: |-
+                =With(
+                    {newImage:Patch('Listing Images',
+                    Defaults('Listing Images'),
+                    {
+                        Listing:RecordsGallery1.Selected,
+                        Name:AddMediaButton1.FileName,
+                        Image: UploadedImage1.Image
+                    }
+                    )
+                    }
+                    ,
+
+                    // If there is only one Image, then set it as the default
+                    If(CountRows(Filter('Listing Images',Listing.Listing = RecordsGallery1.Selected.Listing))=1,
+                        Patch(
+                            Listings,RecordsGallery1.Selected,
+                            {
+                                'Primary Image':newImage
+                            }
+                        );
+                    )
+                );
+                Navigate(scrListings)
+              Text: ="Ok"
+              DisplayMode: =If((SampleImage in UploadedImage1.Image),DisplayMode.Disabled,DisplayMode.Edit)
+              X: =80
+              Y: =80
