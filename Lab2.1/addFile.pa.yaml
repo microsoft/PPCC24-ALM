@@ -23,7 +23,6 @@
             Control: Image
             Properties:
               Image: =If(IsBlank(AddMediaButton1.Media), SampleImage, AddMediaButton1.Media)
-              BorderStyle: =BorderStyle.Solid
               Height: =Parent.Height
               ImagePosition: =ImagePosition.Fill
               Width: =Parent.Width
@@ -69,7 +68,7 @@
                     {newImage:Patch('Listing Images',
                     Defaults('Listing Images'),
                     {
-                        Listing:RecordsGallery1.Selected,
+                        'Listing (contoso_Listing)':RecordsGallery1.Selected,
                         Name:AddMediaButton1.FileName,
                         Image: UploadedImage1.Image
                     }
@@ -78,7 +77,7 @@
                     ,
 
                     // If there is only one Image, then set it as the default
-                    If(CountRows(Filter('Listing Images',Listing.Listing = RecordsGallery1.Selected.Listing))=1,
+                    If(CountRows(Filter('Listing Images','Listing (contoso_Listing)'.Listing = RecordsGallery1.Selected.Listing))=1,
                         Patch(
                             Listings,RecordsGallery1.Selected,
                             {
