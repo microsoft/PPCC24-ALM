@@ -2,75 +2,36 @@
     Control: GroupContainer
     Variant: verticalAutoLayoutContainer
     Properties:
-      DropShadow: =DropShadow.None
-      Fill: =RGBA(250, 250, 250, 1)
+      Fill: =RGBA(245, 245, 245, 1)
       Height: =Parent.Height
       LayoutAlignItems: =LayoutAlignItems.Stretch
       LayoutDirection: =LayoutDirection.Vertical
-      LayoutGap: =15
+      LayoutGap: =16
       LayoutMode: =LayoutMode.Auto
       PaddingBottom: =16
       PaddingLeft: =16
       PaddingRight: =16
       PaddingTop: =16
-      RadiusBottomLeft: =0
-      RadiusBottomRight: =0
-      RadiusTopLeft: =0
-      RadiusTopRight: =0
       Width: =Parent.Width
     Children:
-    - TableNameContainer1:
+    - HeaderContainer1:
         Control: GroupContainer
         Variant: horizontalAutoLayoutContainer
         Properties:
-          Fill: =RGBA(12, 59, 94, 1)
+          Fill: =RGBA(255, 255, 255, 1)
           FillPortions: =0
-          Height: =68
-          LayoutAlignItems: =LayoutAlignItems.Center
+          Height: =75
           LayoutMode: =LayoutMode.Auto
+          RadiusBottomLeft: =8
+          RadiusBottomRight: =8
+          RadiusTopLeft: =8
+          RadiusTopRight: =8
         Children:
-        - Image4:
-            Control: Image
+        - Header1:
+            Control: Header
             Properties:
-              Image: ='Contoso Real Estate Logo'
-              Fill: =RGBA(12, 59, 94, 1)
-        - TableNameLabel1:
-            Control: Label
-            Properties:
-              Text: ="Contoso Real Estate Listing"
-              AlignInContainer: =AlignInContainer.Stretch
-              Fill: =RGBA(12, 59, 94, 1)
-              FillPortions: =1
-              FontWeight: =FontWeight.Semibold
-              Height: =68
-              Size: =16
-        - Offline sync Icon1:
-            Control: Classic/Icon
-            Variant: Globe
-            Properties:
-              OnSelect: =ShowHostInfo(HostInfo.OfflineSync)
-              AccessibleLabel: ="Offline sync status icon"
-              Tooltip: =If(Connection.Connected,"Connected","Offline")
-              AlignInContainer: =AlignInContainer.Stretch
-              Color: =RGBA(255, 255, 255, 1)
-              Fill: =RGBA(12, 59, 94, 1)
-              Icon: |-
-                =Switch(Connection.Sync,
-                   ConnectionSync.Connected, Icon.Globe, 
-                   ConnectionSync.ConnectedWithWarning, Icon.GlobeWarning,
-                   ConnectionSync.ConnectedPendingUpsync, Icon.GlobeChangesPending,
-                   ConnectionSync.ConnectedError, Icon.GlobeError,
-                   ConnectionSync.ConnectedRefresh, Icon.GlobeRefresh,
-                   ConnectionSync.NotConnected, Icon.GlobeNotConnected, 
-                   ConnectionSync.NotConnectedWithWarning, Icon.GlobeWarning,
-                   ConnectionSync.NotConnectedPendingUpsync, Icon.GlobeChangesPending,
-                   ConnectionSync.NotConnectedSyncError, Icon.GlobeError)
-              LayoutMinHeight: =32
-              PaddingLeft: =5
-              PaddingRight: =15
-              TabIndex: =0
-              Visible: =Host.OfflineEnabled
-              Width: =52
+              IsLogoVisible: =false
+              Title: ="Contoso Real Estate Listing"
     - BodyContainer1:
         Control: GroupContainer
         Variant: horizontalAutoLayoutContainer
@@ -381,7 +342,10 @@
                 Variant: verticalAutoLayoutContainer
                 Properties:
                   Fill: =RGBA(255, 255, 255, 1)
+                  LayoutDirection: =LayoutDirection.Vertical
                   LayoutMode: =LayoutMode.Auto
+                  LayoutOverflowX: =LayoutOverflow.Scroll
+                  LayoutOverflowY: =LayoutOverflow.Scroll
                 Children:
                 - frmListing:
                     Control: Form
@@ -405,7 +369,7 @@
                           DisplayName: =DataSourceInfo([@Listings],DataSourceInfo.DisplayName,contoso_listingid1)
                           DisplayMode: =DisplayMode.View
                           Height: =40
-                          Width: =400
+                          Width: =458
                         Children:
                         - DataCardValue4:
                             Control: Label
@@ -425,6 +389,11 @@
                             Properties:
                               Text: =Parent.DisplayName
                               AutoHeight: =true
+                              BorderStyle: =BorderStyle.None
+                              BorderThickness: =2
+                              Color: =RGBA(50, 49, 48, 1)
+                              FocusedBorderThickness: '=4   '
+                              FontWeight: =FontWeight.Semibold
                               Height: =34
                               PaddingLeft: =0
                               Width: =Parent.Width - 60
@@ -443,7 +412,7 @@
                           Update: =DataCardValue5.Text
                           DisplayMode: =Parent.DisplayMode
                           Height: =50
-                          Width: =400
+                          Width: =458
                           X: =1
                         Children:
                         - StarVisible4:
@@ -468,7 +437,6 @@
                               PaddingLeft: =0
                               PaddingRight: =0
                               PaddingTop: =0
-                              Size: =13
                               Visible: =Parent.DisplayMode=DisplayMode.Edit
                               Width: =Parent.Width - 60
                               X: =30
@@ -495,6 +463,7 @@
                             Properties:
                               Text: =Parent.DisplayName
                               AutoHeight: =true
+                              FontWeight: =FontWeight.Semibold
                               Height: =34
                               PaddingLeft: =0
                               Width: =Parent.Width - 60
@@ -512,7 +481,7 @@
                           Update: =DataCardValue3.Text
                           DisplayMode: =Parent.DisplayMode
                           Height: =50
-                          Width: =400
+                          Width: =458
                           Y: =1
                         Children:
                         - StarVisible3:
@@ -537,7 +506,6 @@
                               PaddingLeft: =0
                               PaddingRight: =0
                               PaddingTop: =0
-                              Size: =13
                               Visible: =Parent.DisplayMode=DisplayMode.Edit
                               Width: =Parent.Width - 60
                               X: =30
@@ -564,6 +532,7 @@
                             Properties:
                               Text: =Parent.DisplayName
                               AutoHeight: =true
+                              FontWeight: =FontWeight.Semibold
                               Height: =34
                               PaddingLeft: =0
                               Width: =Parent.Width - 60
@@ -581,7 +550,7 @@
                           Update: =DataCardValue1.Text
                           DisplayMode: =Parent.DisplayMode
                           Height: =50
-                          Width: =400
+                          Width: =458
                           X: =1
                           Y: =1
                         Children:
@@ -607,7 +576,6 @@
                               PaddingLeft: =0
                               PaddingRight: =0
                               PaddingTop: =0
-                              Size: =13
                               Visible: =Parent.DisplayMode=DisplayMode.Edit
                               Width: =Parent.Width - 60
                               X: =30
@@ -634,6 +602,7 @@
                             Properties:
                               Text: =Parent.DisplayName
                               AutoHeight: =true
+                              FontWeight: =FontWeight.Semibold
                               Height: =34
                               PaddingLeft: =0
                               Width: =Parent.Width - 60
@@ -650,7 +619,7 @@
                           Update: =DataCardValue2.Text
                           DisplayMode: =Parent.DisplayMode
                           Height: =50
-                          Width: =400
+                          Width: =458
                           Y: =2
                         Children:
                         - StarVisible2:
@@ -675,7 +644,6 @@
                               PaddingLeft: =0
                               PaddingRight: =0
                               PaddingTop: =0
-                              Size: =13
                               Visible: =Parent.DisplayMode=DisplayMode.Edit
                               Width: =Parent.Width - 60
                               X: =30
@@ -703,6 +671,7 @@
                             Properties:
                               Text: =Parent.DisplayName
                               AutoHeight: =true
+                              FontWeight: =FontWeight.Semibold
                               Height: =34
                               PaddingLeft: =0
                               Width: =Parent.Width - 60
@@ -719,7 +688,7 @@
                           Update: =Value(DataCardValue6.Text)
                           DisplayMode: =Parent.DisplayMode
                           Height: =50
-                          Width: =400
+                          Width: =458
                           X: =1
                           Y: =2
                         Children:
@@ -745,7 +714,6 @@
                               PaddingLeft: =0
                               PaddingRight: =0
                               PaddingTop: =0
-                              Size: =13
                               Visible: =Parent.DisplayMode=DisplayMode.Edit
                               Width: =Parent.Width - 60
                               X: =30
@@ -772,6 +740,7 @@
                             Properties:
                               Text: =Parent.DisplayName
                               AutoHeight: =true
+                              FontWeight: =FontWeight.Semibold
                               Height: =34
                               PaddingLeft: =0
                               Width: =Parent.Width - 60
@@ -788,7 +757,7 @@
                           Update: =DataCardValue8.SelectedItems.Value
                           DisplayMode: =Parent.DisplayMode
                           Height: =50
-                          Width: =400
+                          Width: =458
                           Y: =3
                         Children:
                         - StarVisible6:
@@ -813,7 +782,6 @@
                               PaddingLeft: =0
                               PaddingRight: =0
                               PaddingTop: =0
-                              Size: =13
                               Visible: =Parent.DisplayMode=DisplayMode.Edit
                               Width: =Parent.Width - 60
                               X: =30
@@ -828,6 +796,10 @@
                               SearchFields: =["Value"]
                               Tooltip: =Parent.DisplayName
                               BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                              ChevronDisabledBackground: =RGBA(242, 242, 241, 0)
+                              ChevronDisabledFill: =RGBA(161, 159, 157, 1)
+                              Color: =RGBA(50, 49, 48, 1)
+                              DisabledColor: =RGBA(161, 159, 157, 1)
                               DisplayMode: =Parent.DisplayMode
                               PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
                               Width: =Parent.Width - 60
@@ -838,6 +810,7 @@
                             Properties:
                               Text: =Parent.DisplayName
                               AutoHeight: =true
+                              FontWeight: =FontWeight.Semibold
                               Height: =34
                               PaddingLeft: =0
                               Width: =Parent.Width - 60
@@ -854,7 +827,7 @@
                           Update: =DataCardValue7.Selected
                           DisplayMode: =Parent.DisplayMode
                           Height: =50
-                          Width: =400
+                          Width: =458
                           X: =1
                           Y: =3
                         Children:
@@ -880,7 +853,6 @@
                               PaddingLeft: =0
                               PaddingRight: =0
                               PaddingTop: =0
-                              Size: =13
                               Visible: =Parent.DisplayMode=DisplayMode.Edit
                               Width: =Parent.Width - 60
                               X: =30
@@ -905,6 +877,7 @@
                             Properties:
                               Text: =Parent.DisplayName
                               AutoHeight: =true
+                              FontWeight: =FontWeight.Semibold
                               Height: =34
                               PaddingLeft: =0
                               Width: =Parent.Width - 60
@@ -918,6 +891,8 @@
                   LayoutDirection: =LayoutDirection.Vertical
                   LayoutGap: =4
                   LayoutMode: =LayoutMode.Auto
+                  LayoutOverflowX: =LayoutOverflow.Scroll
+                  LayoutOverflowY: =LayoutOverflow.Scroll
                   Visible: =!newMode
                 Children:
                 - conImagesToolbar_1:
@@ -946,99 +921,105 @@
                           Height: =24
                           Icon: =Icon.Trash
                           LayoutMinHeight: =0
-                - galImages_1:
-                    Control: Gallery
-                    Variant: BrowseLayout_Vertical_TwoTextOneImageVariant_ver5.0
+                - Container1:
+                    Control: GroupContainer
+                    Variant: horizontalAutoLayoutContainer
                     Properties:
-                      Items: =Filter('Listing Images',Listing.Listing = RecordsGallery1.Selected.Listing)
-                      DelayItemLoading: =true
-                      Layout: =Layout.Vertical
-                      LayoutMinWidth: =0
-                      LoadingSpinner: =LoadingSpinner.Data
-                      TemplatePadding: =0
-                      TemplateSize: =104
+                      LayoutMode: =LayoutMode.Auto
                     Children:
-                    - ButtonCanvas1_1:
-                        Control: Button
+                    - galImages_1:
+                        Control: Gallery
+                        Variant: BrowseLayout_Vertical_TwoTextOneImageVariant_ver5.0
                         Properties:
-                          OnSelect: |-
-                            =Patch(
-                                Listings,RecordsGallery1.Selected,
-                                {
-                                    'Primary Image':ThisItem
-                                }
-                            );
-                          Appearance: ='ButtonCanvas.Appearance'.Subtle
-                          Text: =If(Text(RecordsGallery1.Selected.'Primary Image'.contoso_ImageId) = Text(ThisItem.contoso_ImageId),"Default", "Set Default")
-                          DisplayMode: =If(RecordsGallery1.Selected.'Primary Image'.contoso_ImageId = ThisItem.contoso_ImageId,DisplayMode.View, DisplayMode.Edit)
-                          X: =Parent.Width-Self.Width-8
-                          Y: =8
-                    - Rectangle2_1:
-                        Control: Rectangle
-                        Properties:
-                          OnSelect: =Select(Parent)
-                          Height: =Parent.TemplateHeight - Separator2_1.Height
-                          Visible: =ThisItem.IsSelected
-                          Width: =4
-                    - Separator2_1:
-                        Control: Rectangle
-                        Properties:
-                          OnSelect: =Select(Parent)
-                          Fill: =RGBA(255, 255, 255, 1)
-                          Height: =8
-                          Width: =Parent.TemplateWidth
-                          Y: =Parent.TemplateHeight - Self.Height
-                    - Subtitle2_1:
-                        Control: Label
-                        Properties:
-                          OnSelect: =Select(Parent)
-                          Text: =ThisItem.'Created On'
-                          FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
-                          Height: =Self.Size * 1.8
-                          PaddingBottom: =0
-                          PaddingLeft: =12
-                          PaddingRight: =0
-                          PaddingTop: =0
-                          VerticalAlign: =VerticalAlign.Top
-                          Width: =Title2_1.Width
-                          X: =Title2_1.X
-                          Y: =Title2_1.Y + Title2_1.Height
-                    - Title2_1:
-                        Control: Label
-                        Properties:
-                          OnSelect: =Select(Parent)
-                          Text: =ThisItem.Name
-                          FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
-                          Height: =Self.Size * 1.8
-                          PaddingBottom: =0
-                          PaddingLeft: =12
-                          PaddingRight: =0
-                          PaddingTop: =0
-                          VerticalAlign: =VerticalAlign.Top
-                          Width: =Parent.TemplateWidth - 173
-                          X: =103
-                          Y: =(Parent.TemplateHeight - (Self.Size * 1.8 + Subtitle2_1.Size * 1.8)) / 2
-                    - Image2_1:
-                        Control: Image
-                        Properties:
-                          OnSelect: =Select(Parent)
-                          Image: =ThisItem.Image
-                          Height: =72
-                          RadiusBottomLeft: =8
-                          RadiusBottomRight: =8
-                          RadiusTopLeft: =8
-                          RadiusTopRight: =8
-                          Width: =72
-                          X: =16
-                          Y: =(Parent.TemplateHeight / 2) - (Self.Height / 2)
-                    - TextCanvas3_1:
-                        Control: Text
-                        Properties:
-                          Text: =ThisItem.contoso_ImageId
-                          Height: =34
-                          Width: =30
-                          X: =40
-                          Y: =40
+                          Items: =Filter('Listing Images','Listing (contoso_Listing)'.Listing = RecordsGallery1.Selected.Listing)
+                          DelayItemLoading: =true
+                          Layout: =Layout.Vertical
+                          LayoutMinWidth: =0
+                          LoadingSpinner: =LoadingSpinner.Data
+                          TemplatePadding: =0
+                          TemplateSize: =104
+                        Children:
+                        - ButtonCanvas1_2:
+                            Control: Button
+                            Properties:
+                              OnSelect: |-
+                                =Patch(
+                                    Listings,RecordsGallery1.Selected,
+                                    {
+                                        'Primary Image':ThisItem
+                                    }
+                                );
+                              Appearance: ='ButtonCanvas.Appearance'.Subtle
+                              Text: =If(Text(RecordsGallery1.Selected.'Primary Image'.contoso_ImageId) = Text(ThisItem.contoso_ImageId),"Default", "Set Default")
+                              DisplayMode: =If(RecordsGallery1.Selected.'Primary Image'.contoso_ImageId = ThisItem.contoso_ImageId,DisplayMode.View, DisplayMode.Edit)
+                              X: =Parent.Width-Self.Width-8
+                              Y: =8
+                        - Rectangle2_2:
+                            Control: Rectangle
+                            Properties:
+                              OnSelect: =Select(Parent)
+                              Height: =Parent.TemplateHeight - Separator2_2.Height
+                              Visible: =ThisItem.IsSelected
+                              Width: =4
+                        - Separator2_2:
+                            Control: Rectangle
+                            Properties:
+                              OnSelect: =Select(Parent)
+                              Fill: =RGBA(255, 255, 255, 1)
+                              Height: =8
+                              Width: =Parent.TemplateWidth
+                              Y: =Parent.TemplateHeight - Self.Height
+                        - Subtitle2_2:
+                            Control: Label
+                            Properties:
+                              OnSelect: =Select(Parent)
+                              Text: =ThisItem.'Created On'
+                              FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                              Height: =Self.Size * 1.8
+                              PaddingBottom: =0
+                              PaddingLeft: =12
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              VerticalAlign: =VerticalAlign.Top
+                              Width: =Title2_2.Width
+                              X: =Title2_2.X
+                              Y: =Title2_2.Y + Title2_2.Height
+                        - Title2_2:
+                            Control: Label
+                            Properties:
+                              OnSelect: =Select(Parent)
+                              Text: =ThisItem.Name
+                              FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                              Height: =Self.Size * 1.8
+                              PaddingBottom: =0
+                              PaddingLeft: =12
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              VerticalAlign: =VerticalAlign.Top
+                              Width: =Parent.TemplateWidth - 173
+                              X: =103
+                              Y: =(Parent.TemplateHeight - (Self.Size * 1.8 + Subtitle2_2.Size * 1.8)) / 2
+                        - Image2_2:
+                            Control: Image
+                            Properties:
+                              OnSelect: =Select(Parent)
+                              Image: =ThisItem.Image
+                              Height: =72
+                              RadiusBottomLeft: =8
+                              RadiusBottomRight: =8
+                              RadiusTopLeft: =8
+                              RadiusTopRight: =8
+                              Width: =72
+                              X: =16
+                              Y: =(Parent.TemplateHeight / 2) - (Self.Height / 2)
+                        - TextCanvas3_2:
+                            Control: Text
+                            Properties:
+                              Text: =ThisItem.contoso_ImageId
+                              Height: =34
+                              Width: =30
+                              X: =40
+                              Y: =40
         - DeleteConfirmDialogContainer1:
             Control: GroupContainer
             Variant: verticalAutoLayoutContainer
