@@ -1,0 +1,24 @@
+- ImageGrid1:
+    Control: contoso_Contoso.ImageGrid
+    Variant: pcfdataset
+    Properties:
+      ImageContent: ="contoso_image"
+      Items: =Filter('Listing Images',Listing.Listing = RecordsGallery1.Selected.Listing)
+      FillPortions: =1
+    Children:
+    - Created On1:
+        Control: contoso_Contoso.ImageGridTemplate_dataField
+        Variant: textualColumn
+        Properties:
+          FieldDisplayName: ="Created On"
+          FieldName: ="createdon"
+          FieldType: ="d"
+          Order: =2
+    - Name1:
+        Control: contoso_Contoso.ImageGridTemplate_dataField
+        Variant: textualColumn
+        Properties:
+          FieldDisplayName: ="Name"
+          FieldName: ="contoso_name"
+          FieldType: ="s"
+          Order: =1
