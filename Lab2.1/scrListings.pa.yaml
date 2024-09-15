@@ -931,7 +931,7 @@
                         Control: Gallery
                         Variant: BrowseLayout_Vertical_TwoTextOneImageVariant_ver5.0
                         Properties:
-                          Items: =Filter('Listing Images','Listing (contoso_Listing)'.Listing = RecordsGallery1.Selected.Listing)
+                          Items: =Filter('Listing Images',Listing.Listing = RecordsGallery1.Selected.Listing)
                           DelayItemLoading: =true
                           Layout: =Layout.Vertical
                           LayoutMinWidth: =0
