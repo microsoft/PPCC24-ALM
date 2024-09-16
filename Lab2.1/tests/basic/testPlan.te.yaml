@@ -1,0 +1,23 @@
+testSuite:
+  testSuiteName: Base state
+  testSuiteDescription: Verifies that initial setup of 
+  persona: User1
+  appLogicalName: contoso_contosorealestatelisting_72fd2
+
+  testCases:
+    - testCaseName: Data Exists
+      testCaseDescription: Verify that listings exist
+      testSteps: |
+        = Assert(CountRows(RecordsGallery1.Items) > 0, "No records found");
+
+testSettings:
+  locale: "en-US"
+  recordVideo: true
+  browserConfigurations:
+    - browser: Chromium
+
+environmentVariables:
+  users:
+    - personaName: User1
+      emailKey: user1Email
+      passwordKey: user1Password
