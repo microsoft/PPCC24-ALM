@@ -15,6 +15,7 @@ This workshop will help you understand how to use all of the features in Power P
 
     - [Create a GitHub Account](Lab2.1/CREATE%20GITHUB.md)
     - [Fork the repo](Lab2.1/FORK%20REPO.md)
+    - [Create CodeSpace](Lab2.1/CREATE%20CODESPACE.md)
     - [Connect to the Power Platform using the Power Platform Command-Line Interface (CLI)](Lab2.1/PAC%20CLI.md)
 
     Extra content:
