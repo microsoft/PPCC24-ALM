@@ -18,6 +18,7 @@ This workshop will help you understand how to use all of the features in Power P
 
 - [How to Create a GitHub Account](Lab2.1/CREATE%20GITHUB.md)
 - [Connect to the Power Platform using the Power Platform Command-Line Interface (CLI)](Lab2.1/PAC%20CLI.md)
+- [Presentation Deck](ALM%20Workshop.pdf)
 
 ## ™️ Trademarks
 
