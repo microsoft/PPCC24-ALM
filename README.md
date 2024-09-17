@@ -9,12 +9,12 @@ This workshop will help you understand how to use all of the features in Power P
 
 - [Lab 1 Setup and Configure](Lab%201%20Setup%20and%20Configure.pdf)
 - [Lab 2 Develop using Git](Lab%202%20Develop%20using%20Git.pdf)
-- [Lab 2.1 Code-first Development](Lab%202.1%20Code-first%20Development.pdf)</br>
+- [Lab 2.1 Code-first Development](Lab%202.1%20Code-first%20Development.pdf)
     
    How to:
 
     - [Create a GitHub Account](Lab2.1/CREATE%20GITHUB.md)
-     
+    - [Fork the repo](Lab2.1/FORK%20REPO.md)
     - [Connect to the Power Platform using the Power Platform Command-Line Interface (CLI)](Lab2.1/PAC%20CLI.md)
 
     Extra content:
