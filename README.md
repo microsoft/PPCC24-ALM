@@ -9,16 +9,22 @@ This workshop will help you understand how to use all of the features in Power P
 
 - [Lab 1 Setup and Configure](Lab%201%20Setup%20and%20Configure.pdf)
 - [Lab 2 Develop using Git](Lab%202%20Develop%20using%20Git.pdf)
-- [Lab 2.1 Code-first Development](Lab%202.1%20Code-first%20Development.pdf)
-    - Bonus [Test Automation](Lab2.1/tests/basic/README.md)
-    - Bonus [YAML code snippets for Power Apps](https://aka.ms/power-apps-snippets)
+- [Lab 2.1 Code-first Development](Lab%202.1%20Code-first%20Development.pdf)</br>
+    
+   How to:
+
+    - [Create a GitHub Account](Lab2.1/CREATE%20GITHUB.md)
+     
+    - [Connect to the Power Platform using the Power Platform Command-Line Interface (CLI)](Lab2.1/PAC%20CLI.md)
+
+    Extra content:
+    - [Test Automation](Lab2.1/tests/basic/README.md)
+    - [YAML code snippets for Power Apps](https://aka.ms/power-apps-snippets)
 - [Lab 3 Deploy](Lab%203%20Deploy.pdf)
 - [Lab 4 Use the Catalog](Lab%204%20Use%20the%20Catalog.pdf)
 
 ## Apendix
 
-- [How to Create a GitHub Account](Lab2.1/CREATE%20GITHUB.md)
-- [Connect to the Power Platform using the Power Platform Command-Line Interface (CLI)](Lab2.1/PAC%20CLI.md)
 - [Presentation Deck](ALM%20Workshop.pdf)
 
 ## ™️ Trademarks
