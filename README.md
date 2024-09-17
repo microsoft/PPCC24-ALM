@@ -9,7 +9,7 @@ This workshop will help you understand how to use all of the features in Power P
 
 - [Lab 1 Setup and Configure](https://www.bing.com)
 - [Lab 2 Develop using Git](https://www.bing.com)
-- [Lab 2.1 Code-first Development](./Lab2.1/tests/basic/README.md)
+- [Lab 2.1 Code-first Development](Lab%202.1%20Code-first%20Development.pdf)
     - Bonus [Test Automation](Lab2.1/tests/basic/README.md)
 - [Lab 3 Deploy](Lab%203%20Deploy.pdf)
 - [Lab 4 Use the Catalog](Lab%204%20Use%20the%20Catalog.pdf)
